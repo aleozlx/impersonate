@@ -9,8 +9,7 @@
 #include <unistd.h>
 
 int _su(char *user) {
-	char *user, *group;
-	char *end;
+	char *group, *end;
 
 	uid_t uid = getuid();
 	gid_t gid = getgid();

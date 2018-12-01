@@ -6,4 +6,6 @@ description = "Become someone else in your Rust app"
 license = "Apache-2.0 OR MIT"
 repository = "https://github.com/aleozlx/impersonate.git"
 build = "src/build.rs"
-links = "suexec"
+
+[build-dependencies]
+cc = "1.0"
