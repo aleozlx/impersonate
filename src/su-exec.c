@@ -8,14 +8,13 @@
 #include <string.h>
 #include <unistd.h>
 
-int _su(char *user_spec[]) {
+int _su(char *user) {
 	char *user, *group;
 	char *end;
 
 	uid_t uid = getuid();
 	gid_t gid = getgid();
 
-	user = user_spec[1];
 	group = strchr(user, ':');
 	if (group)
 		*group++ = '\0';

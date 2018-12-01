@@ -1,7 +1,7 @@
 [package]
 name = "impersonate"
-version = "0.1.0"
+version = "0.0.1"
 authors = ["Alex Yang <aleozlx@gmail.com>"]
-edition = "2018"
-
-[dependencies]
+description = "Become someone else in your Rust app"
+license = "Apache-2.0 OR MIT"
+build = "src/build.rs"
