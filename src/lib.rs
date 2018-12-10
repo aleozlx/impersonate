@@ -66,12 +66,8 @@ impl User {
                 Ok(()) => {
                     let user_name: &str = &self.user_name;
                     let ret_su = unsafe { _su(std::ffi::CString::new(user_name).unwrap().into_raw()) };
-                    if ret_su == 0 {
-                        Ok(())
-                    }
-                    else {
-                        Err(Error::CError(ret_su))
-                    }
+                    if ret_su == 0 { Ok(()) }
+                    else { Err(Error::NixError(nix::Error::last())) }
                 }
                 Err(e) => Err(Error::IOError(e))
             }
@@ -82,18 +78,12 @@ impl User {
 
 pub enum Error {
     IOError(std::io::Error),
-    NixError(nix::Error),
-    CError(i32) // TODO merge this into NixError
+    NixError(nix::Error)
 }
 
 impl std::fmt::Display for Error {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
-            Error::CError(-1) => write!(f, "setgroups()"),
-            Error::CError(-2) => write!(f, "realloc()"),
-            Error::CError(-3) => write!(f, "setgid()"),
-            Error::CError(-4) => write!(f, "setuid()"),
-            Error::CError(_) => unreachable!(),
             Error::IOError(e) => write!(f, "{}", e),
             Error::NixError(e) => write!(f, "{}", e),
         }

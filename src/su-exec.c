@@ -62,11 +62,11 @@ int _su(char *user) {
 				break;
 			}
 			glist = realloc(glist, ngroups * sizeof(gid_t));
-			if (glist == NULL) return -2;
+			if (glist == NULL) return -1;
 		}
 	}
 
-	if (setgid(gid) < 0) return -3;
-	if (setuid(uid) < 0) return -4;
+	if (setgid(gid) < 0) return -1;
+	if (setuid(uid) < 0) return -1;
 	return 0;
 }
