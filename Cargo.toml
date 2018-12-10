@@ -9,6 +9,7 @@ build = "src/build.rs"
 
 [dependencies]
 nix = "0.12"
+regex = "1.1.0"
 
 [build-dependencies]
 cc = "1.0"

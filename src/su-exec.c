@@ -1,9 +1,6 @@
 #include <sys/types.h>
-#include <err.h>
-#include <errno.h>
 #include <grp.h>
 #include <pwd.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
@@ -53,32 +50,23 @@ int _su(char *user) {
 	}
 
 	if (pw == NULL) {
-		if (setgroups(1, &gid) < 0)
-			err(1, "setgroups(%i)", gid);
+		if (setgroups(1, &gid) < 0) return -1;
 	} else {
 		int ngroups = 0;
 		gid_t *glist = NULL;
 
 		while (1) {
 			int r = getgrouplist(pw->pw_name, gid, glist, &ngroups);
-
 			if (r >= 0) {
-				if (setgroups(ngroups, glist) < 0)
-					err(1, "setgroups");
+				if (setgroups(ngroups, glist) < 0) return -1;
 				break;
 			}
-
 			glist = realloc(glist, ngroups * sizeof(gid_t));
-			if (glist == NULL)
-				err(1, "malloc");
+			if (glist == NULL) return -2;
 		}
 	}
 
-	if (setgid(gid) < 0)
-		err(1, "setgid(%i)", gid);
-
-	if (setuid(uid) < 0)
-		err(1, "setuid(%i)", uid);
-
-	return 1;
+	if (setgid(gid) < 0) return -3;
+	if (setuid(uid) < 0) return -4;
+	return 0;
 }
