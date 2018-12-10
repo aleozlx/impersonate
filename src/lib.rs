@@ -53,8 +53,8 @@ impl User {
             Some(User {
                 user_name: caps.get(2).unwrap().as_str().to_owned(),
                 group_name: caps.get(4).unwrap().as_str().to_owned(),
-                uid: nix::unistd::Uid::from_raw(caps.get(2).unwrap().as_str().parse().expect("Failed to parse uid")),
-                gid: nix::unistd::Gid::from_raw(caps.get(2).unwrap().as_str().parse().expect("Failed to parse gid"))
+                uid: nix::unistd::Uid::from_raw(caps.get(1).unwrap().as_str().parse().expect("Failed to parse uid")),
+                gid: nix::unistd::Gid::from_raw(caps.get(3).unwrap().as_str().parse().expect("Failed to parse gid"))
             })
         }
         else { None }
